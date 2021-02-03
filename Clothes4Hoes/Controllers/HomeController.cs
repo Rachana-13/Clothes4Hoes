@@ -17,20 +17,22 @@ namespace Clothes4Hoes.Controllers
         {
             _logger = logger;
         }
-
+        
         public IActionResult Index()
         {
             return View();
         }
-
+        [Route("Inloggen")]
         public IActionResult Inloggen()
         {
             return View();
         }
+        [Route("Contact")]
         public IActionResult Contact()
         {
             return View();
         }
+        [Route("Kleding")]
         public IActionResult Kleding()
         {
             return View();
