@@ -1,25 +1,27 @@
-﻿h1 {
+﻿* {
+    font-family: 'Bookman Old Style';
+    background-color: #FFF3F5;
+}
+h1 {
     text-align: center;
     font-size: 50px;
 }
 nav ul {
     list-style-type: none;
     overflow: hidden;
-    background-color: #40E0D0;
+    background-color: #FFB9BD;
     height: 80px;
-    border-style: solid;
-    border-color: black;
 }
 
 nav li {
-    float: right;
     text-align: center;
-    background-color: #40E0D0;
+    float: left;
+    background-color: #FFB9BD;
 }
 
     nav li a {
         display: block;
-        background-color: #40E0D0;
+        background-color: #FFB9BD;
         text-align: center;
         padding: 80px 16px;
         text-decoration: none;
@@ -30,5 +32,12 @@ nav li {
     }
 
 li a:hover {
-    background-color: #111;
+    background-color: #FFD5D8;
+}
+h2 {
+    color: #F2656E;
+    text-align: center;
+}
+p {
+    text-align: center;
 }
