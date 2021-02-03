@@ -23,7 +23,15 @@ namespace Clothes4Hoes.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Inloggen()
+        {
+            return View();
+        }
+        public IActionResult Contact()
+        {
+            return View();
+        }
+        public IActionResult Kleding()
         {
             return View();
         }
