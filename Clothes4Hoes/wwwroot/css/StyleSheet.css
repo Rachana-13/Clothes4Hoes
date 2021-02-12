@@ -19,16 +19,16 @@ nav li {
     background-color: #FFB9BD;
 }
 
-    nav li a {
-        display: block;
-        background-color: #FFB9BD;
-        text-align: center;
-        padding: 80px 16px;
-        text-decoration: none;
-        text-align: center;
-        color: white;
-        padding-top: 30px;
-        transition: background-color 1s;
+nav li a {
+    display: block;
+    background-color: #FFB9BD;
+    text-align: center;
+    padding: 80px 16px;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    padding-top: 30px;
+    transition: background-color 1s;
     }
 
 li a:hover {
@@ -42,4 +42,24 @@ p {
     text-align: center;
 }
 
+.column-box {
+    display: flex;
+}
 
+h4 {
+    background-color: #FFB9BD;
+}
+h5 {
+    background-color: #FFB9BD;
+}
+.box {
+    float: left;
+    height: 80px;
+    width: 20vw;
+    background-color: #FFB9BD;
+    border-style: solid;
+    border-color: #FFB9BD;
+    text-align: center;
+    margin-top: 30px;
+    flex-grow: 1;
+}
