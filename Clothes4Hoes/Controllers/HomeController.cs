@@ -58,7 +58,6 @@ namespace SchoolTemplate.Controllers
         }
     
        
-
         public IActionResult Privacy ()
         {
             return View();
@@ -82,41 +81,10 @@ namespace SchoolTemplate.Controllers
 
         [Route("Kleding")]
 
-        public IActionResult Kleding()
+         public IActionResult Kleding()
         {
             return View(GetKledingstuks());
         }
-
-        // private List<Kledingstuk> GetKledingstuks()
-        // {
-            // List<Kledingstuk> kledingstuks = new List<Kledingstuk>();
-
-        //    using (MySqlConnection conn = new MySqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-        //        MySqlCommand cmd = new MySqlCommand("select * from kledingstuk", conn);
-
-        //        using (var reader = cmd.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                Kledingstuk k = new Kledingstuk
-        //                {
-        //                    Id = Convert.ToInt32(reader["Id"]),
-        //                    Naam = reader["Naam"].ToString(),
-        //                    Beschrijving = reader["Beschrijving"].ToString(),
-        //                    Prijs = reader["Prijs"].ToString(),
-        //                    Afbeelding = reader["Afbeelding"].ToString(),
-
-        //                };
-
-        //                kledingstuks.Add(k);
-        //            }
-        //        }
-        //    }
-
-        //    return kledingstuks;
-        //}
 
         private Kledingstuk GetKledingstuk(string id)
         {
@@ -151,9 +119,6 @@ namespace SchoolTemplate.Controllers
         {
             List<KledingstukInfo> kledingstuks = new List<KledingstukInfo>();
 
-            string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
-
-
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
@@ -166,7 +131,7 @@ namespace SchoolTemplate.Controllers
                         KledingstukInfo k = new KledingstukInfo
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            Kledingstuk_id = Convert.ToInt32(reader["Festival_id"]),
+                            Kledingstuk_id = Convert.ToInt32(reader["Kledingstuk_id"]),
                             Maten = reader["Maten"].ToString(),
                             Voorraad = reader["Voorraad"].ToString(),
                         };
