@@ -34,6 +34,15 @@ nav li a {
 li a:hover {
     background-color: #FFD5D8;
 }
+
+.logo-image img {
+    float: left;
+    width: 120px;
+    height: 80px;
+    border-style: solid;
+    border-color: black;
+}
+
 h2 {
     color: #F2656E;
     text-align: center;

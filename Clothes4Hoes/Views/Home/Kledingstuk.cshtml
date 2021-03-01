@@ -1,0 +1,32 @@
+﻿@using SchoolTemplate.Database;
+@model Kledingstuk;
+@{
+    ViewData["Title"] = "Kledingstuk";
+    List<KledingstukInfo> kledingstukInfos = ViewData["kledingstukinfos"] as List<KledingstukInfo>;
+}
+
+<h1>@Model.Naam</h1>
+<div class="column-kledingstuk">
+    <div class="kledingstuk-img">
+
+        <img class="kledingstuk-fotos" src="@Model.Afbeelding" />
+    </div>
+
+    <div class="kledingstuk-text">
+        <div class="kledingstuk-beschrijving"></div>
+
+        <!--haal data op van database en wordt vervolgens neergezet-->
+        @foreach (KledingstukInfo k in kledingstukInfos)
+        {
+            <p>&nbsp;</p>
+
+                @Model.Beschrijving <br />
+            <p>&nbsp;</p>
+            <p>Prijs: €  @Model.Prijs per stuk.</p>
+   
+
+
+
+        }
+    </div>
+</div>

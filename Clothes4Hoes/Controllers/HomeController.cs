@@ -5,41 +5,61 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using MySql.Data.MySqlClient;
+using MySql.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using SchoolTemplate.Database;
 
 namespace SchoolTemplate.Controllers
 {
     public class HomeController : Controller
     {
-        string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
-
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        // private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+        private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
-            return View();
+            var kledingstuks = GetKledingstuks();
+            return View(kledingstuks);
         }
-        [Route("Inloggen")]
 
-        public IActionResult Inloggen()
+        public List<Kledingstuk> GetKledingstuks()
         {
-            return View();
-        }
-        [Route("Contact")]
+            List<Kledingstuk> kledingstuks = new List<Kledingstuk>();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
 
-        public IActionResult Contact()
-        {
-            return View();
-        }
-        [Route("Kleding")]
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("select * from kledingstuk", conn);
 
-        public IActionResult Kleding()
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Kledingstuk k = new Kledingstuk
+
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Naam = reader["Naam"].ToString(),
+                            Beschrijving = reader["Beschrijving"].ToString(),
+                            Prijs = reader["Prijs"].ToString(),
+                            Afbeelding = reader["Afbeelding"].ToString(),
+                        };
+                        kledingstuks.Add(k);
+                    }
+                }
+            }
+            return kledingstuks;
+        }
+    
+       
+
+        public IActionResult Privacy ()
         {
             return View();
         }
@@ -54,45 +74,54 @@ namespace SchoolTemplate.Controllers
         public IActionResult Kledingstuk(string id)
         {
             var model = GetKledingstuk(id);
-            var Kledingstuks = GetKledingstuks(id);
-            ViewData["kledingstuks"] = Kledingstuks;
+            var Kledingstukinfos = GetKledingstukInfo(id);
+            ViewData["kledingstukinfos"] = Kledingstukinfos;
 
             return View(model);
         }
-        private List<Kledingstuk> GetKledingstuks(string id)
+
+        [Route("Kleding")]
+
+        public IActionResult Kleding()
         {
-            List<Kledingstuk> kledingstuks = new List<Kledingstuk>();
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from kledingstuk", conn);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Kledingstuk k = new Kledingstuk
-                        {
-                            Id = Convert.ToInt32(reader["Id"]),
-                            Naam = reader["Naam"].ToString(),
-                            Beschrijving = reader["Beschrijving"].ToString(),
-                            Prijs = reader["Prijs"].ToString(),
-                            Afbeelding = reader["Afbeelding"].ToString(),
-
-                        };
-
-                        kledingstuks.Add(k);
-                    }
-                }
-            }
-
-            return kledingstuks;
+            return View(GetKledingstuks());
         }
+
+        // private List<Kledingstuk> GetKledingstuks()
+        // {
+            // List<Kledingstuk> kledingstuks = new List<Kledingstuk>();
+
+        //    using (MySqlConnection conn = new MySqlConnection(connectionString))
+        //    {
+        //        conn.Open();
+        //        MySqlCommand cmd = new MySqlCommand("select * from kledingstuk", conn);
+
+        //        using (var reader = cmd.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                Kledingstuk k = new Kledingstuk
+        //                {
+        //                    Id = Convert.ToInt32(reader["Id"]),
+        //                    Naam = reader["Naam"].ToString(),
+        //                    Beschrijving = reader["Beschrijving"].ToString(),
+        //                    Prijs = reader["Prijs"].ToString(),
+        //                    Afbeelding = reader["Afbeelding"].ToString(),
+
+        //                };
+
+        //                kledingstuks.Add(k);
+        //            }
+        //        }
+        //    }
+
+        //    return kledingstuks;
+        //}
+
         private Kledingstuk GetKledingstuk(string id)
         {
             List<Kledingstuk> kledingstuks = new List<Kledingstuk>();
-
+          
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
@@ -118,5 +147,58 @@ namespace SchoolTemplate.Controllers
 
             return kledingstuks[0];
         }
+        private List<KledingstukInfo> GetKledingstukInfo(string kledingstukId)
+        {
+            List<KledingstukInfo> kledingstuks = new List<KledingstukInfo>();
+
+            string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand($"select * from kledingstuk_info where kledingstuk_id = {kledingstukId}", conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        KledingstukInfo k = new KledingstukInfo
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Kledingstuk_id = Convert.ToInt32(reader["Festival_id"]),
+                            Maten = reader["Maten"].ToString(),
+                            Voorraad = reader["Voorraad"].ToString(),
+                        };
+                        kledingstuks.Add(k);
+                    }
+                }
+            }
+
+            return kledingstuks;
+        }
+
+        private readonly ILogger<HomeController> _logger;
+
+
+        [Route("Inloggen")]
+
+        public IActionResult Inloggen()
+        {
+            return View();
+        }
+        [Route("Contact")]
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+       
+       
+       
     }
+
 }
+
+
+   

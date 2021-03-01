@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SchoolTemplate.Controllers
+﻿namespace SchoolTemplate.Database
 {
     public class Kledingstuk
     {
