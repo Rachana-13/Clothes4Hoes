@@ -180,3 +180,41 @@ hr {
 }
 
 
+.column-kledingstuk {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+    flex-grow: 1;
+}
+
+.kledingstuk-img {
+    width: 50vw;
+    height: 60vh;
+    flex-grow: 1;
+    overflow: hidden;
+    padding-left: 100px;
+    padding-top: 30px;
+}
+
+.kledingstuk-fotos {
+    height: 100%;
+    flex-grow: 1;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.kledingstuk-text {
+    width: 55%;
+    height: 60%;
+    flex-grow: 1;
+}
+
+.kledingstuk-beschrijving {
+    width: 55%;
+    height: 60%;
+    word-break: inherit;
+    padding-left: 120px;
+}
+

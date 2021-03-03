@@ -7,21 +7,15 @@
 
 <h1> Bestel hier uw kleding</h1>
 
-
-<!--Laat data zien van de database festival waarvan de naam en als je op de naam klikt wordt je geredirect naar de aangekozen festival-->
     @if (Model != null)
     {
         foreach (Kledingstuk kledingstuk in Model)
         {
 
 <div class="box-kleding">
-            @foreach (Kledingstuk k in Model)
-            { <p>@k.Naam
-                 @k.Beschrijving</p>
-             }
-        <a href="/kledingstuk/@kledingstuk.Id">@kledingstuk.Naam </a>
-
-        </div>
+    <a href="/kledingstuk/@kledingstuk.Id">
+        <img src="/img/@kledingstuk.Afbeelding" width="100" height="100"/>
+</div>
 
     }
 }

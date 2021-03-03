@@ -15,8 +15,8 @@ namespace SchoolTemplate.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
-        // private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
-        private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+        private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+        // private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
 
         public HomeController(ILogger<HomeController> logger)
         {
