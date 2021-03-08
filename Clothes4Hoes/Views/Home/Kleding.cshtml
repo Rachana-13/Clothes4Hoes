@@ -1,21 +1,21 @@
 ﻿@using SchoolTemplate.Database;
 @model List<Kledingstuk>
-@{ 
+@{
     ViewData["Title"] = "Kleding";
 
 }
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h1> Bestel hier uw kleding</h1>
 
-    @if (Model != null)
+@if (Model != null)
+{
+    foreach (Kledingstuk kledingstuk in Model)
     {
-        foreach (Kledingstuk kledingstuk in Model)
-        {
 
-<div class="box-kleding">
-    <a href="/kledingstuk/@kledingstuk.Id">
-    <img class="kledingstuk-fotos" src=@kledingstuk.Afbeelding width="100" height="100"/>
-</div>
+        <div class="box-kleding">
+            <a href="/kledingstuk/@kledingstuk.Id">
+                <img class="kledingstuk-fotos" src=@kledingstuk.Afbeelding width="100" height="100" />
+        </div>
 
     }
 }
