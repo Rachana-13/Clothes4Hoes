@@ -1,6 +1,16 @@
-﻿@{
+﻿@model PersonModel
+@{
     ViewData["Title"] = "Contact";
 }
+
+
+
+@if (Model != null)
+{
+
+}
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h1>Contact</h1>
 <div class="contact-pagina">
@@ -27,3 +37,21 @@
 
 </div>
 
+<div class="contact-pagina">
+
+    <h2 id="h2centerform">Contactformulier</h2>
+    <hr />
+    <!-- formulier wordt verstuurd naar database en als de invoer niet goed is wordt het met eigen gemaakt error message weer gegeven-->
+    <form text- method="post">
+        <input type="text" name="Voornaam" placeholder="Voornaam" /> <br />
+        @Html.ValidationMessageFor(m => m.Voornaam) <br />
+        <input type="text" name="Achternaam" placeholder="Achternaam" /> <br />
+        @Html.ValidationMessageFor(m => m.Achternaam) <br />
+        <input type="text" name="Email" placeholder="Emailadres" /> <br />
+        @Html.ValidationMessageFor(m => m.Email) <br />
+        <input type="date" name="Geboortedatum" placeholder="Geboortedatum" /> <br />
+        @Html.ValidationMessageFor(m => m.Geboortedatum) <br />
+        <input type="submit" value="verstuur" />
+    </form>
+
+</div>
