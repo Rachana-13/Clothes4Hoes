@@ -205,6 +205,16 @@ hr {
     margin-right: auto;
 }
 
+.kledingstuk-algemeenfotos {
+    height: 350px;
+    flex-grow: 1;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+    float: left;
+}
+
 .kledingstuk-text {
     width: 55%;
     height: 60%;
@@ -217,4 +227,5 @@ hr {
     word-break: inherit;
     padding-left: 120px;
 }
+
 
