@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SchoolTemplate.Database;
+@model List<Kledingstuk>
+@{
     ViewData["Title"] = "Home Page";
 }
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,4 +12,20 @@
     <h2> Clothes 4 Hoes</h2>
     <p> "The secret of great style is to feel good in what you wear."</p>
 </div>
+
+
+@if (Model != null)
+{
+    foreach (Kledingstuk kledingstuk in Model)
+    {
+
+        <div class="box-kleding">
+            <a href="/kledingstuk/@kledingstuk.Id">
+                <img class="kledingstuk-algemeenfotos" src=@kledingstuk.Afbeelding>
+        </div>
+
+    }
+}
+
+
 
