@@ -152,15 +152,48 @@ namespace SchoolTemplate.Controllers
         {
             return View();
         }
+      
+        //redirect naar contact
         [Route("Contact")]
-
         public IActionResult Contact()
         {
             return View();
+
         }
-       
-       
-       
+        //als het contactformulier goed is ingevuld volgens de requirements dan wordt je naar gelukt gestuurd
+        [Route("Contact")]
+        [HttpPost]
+        public IActionResult Contact(PersonModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            SavePerson(model);
+
+            return Redirect("/gelukt");
+        }
+        [Route("gelukt")]
+        public IActionResult Gelukt()
+        {
+            return View();
+        }
+        //data naar database sturen
+        private void SavePerson(PersonModel person)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant(naam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
+                cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
+                cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
+                cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
+                cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = person.Geboortedatum;
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
+
     }
 
 }
