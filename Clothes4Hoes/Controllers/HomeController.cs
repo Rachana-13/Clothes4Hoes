@@ -177,17 +177,34 @@ namespace SchoolTemplate.Controllers
         {
             return View();
         }
-        //data naar database sturen
+        //data naar database sturen vanuit contactformulier
         private void SavePerson(PersonModel person)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant(naam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_contact(naam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
                 cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
                 cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
                 cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
                 cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = person.Geboortedatum;
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        //data naar database sturen vanuit inlogformulier
+        private void SavePerson(PersonModel person)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_inloggen(naam,achternaam,emailadres,geboortedatum,wachtwoord,wachtwoord herhalen) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum,?wachtwoord,?wachtwoord herhalen)", conn);
+                cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
+                cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
+                cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
+                cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = person.Geboortedatum;
+                cmd.Parameters.Add("?wachtwoord", MySqlDbType.VarChar).Value = person.Wachtwoord;
+                cmd.Parameters.Add("?wachtwoord herhalen", MySqlDbType.VarChar).Value = person.Wachtwoord herhalen;
                 cmd.ExecuteNonQuery();
             }
         }
