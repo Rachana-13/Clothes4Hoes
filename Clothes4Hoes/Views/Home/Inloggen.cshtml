@@ -8,14 +8,15 @@
 {
 
 }
+
+<h1> Log hier in op uw account </h1>
+
 <body>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <h2>Modal Signup Form</h2>
 
+    <div class="inlog-pagina">
 
-    <div class="contact-pagina">
-
-        <h2 id="h2centerform">Contactformulier</h2>
+        <h2 id="h2centerform">Inlogformulier</h2>
         <hr />
         <!-- formulier wordt verstuurd naar database en als de invoer niet goed is wordt het met eigen gemaakt error message weer gegeven-->
         <form text- method="post">
@@ -27,7 +28,7 @@
             @Html.ValidationMessageFor(m => m.Email) <br />
             <input type="date"  name="Geboortedatum" placeholder="Geboortedatum"  /> <br />
             @Html.ValidationMessageFor(m => m.Geboortedatum) <br />
-            <input type="password" name="Wachtwoord" placeholder="" /> <br />
+            <input type="password" name="Wachtwoord" placeholder="Wachtwoord" /> <br />
             @Html.ValidationMessageFor(m => m.Wachtwoord) <br />
 
             <input type="submit" value="verstuur" />
