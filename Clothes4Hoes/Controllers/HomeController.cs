@@ -165,13 +165,26 @@ namespace SchoolTemplate.Controllers
         [HttpPost]
         public IActionResult Contact(PersonModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) 
                 return View(model);
 
             SavePerson(model);
 
             return Redirect("/gelukt");
         }
+        [Route("Inloggen")]
+        [HttpPost]
+        public IActionResult Inloggen(InlogModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            SavePersonLogIn(model);
+
+            return Redirect("/gelukt");
+        }
+
+
         [Route("gelukt")]
         public IActionResult Gelukt()
         {
@@ -183,7 +196,7 @@ namespace SchoolTemplate.Controllers
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_contact(naam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_contact(voornaam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
                 cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
                 cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
                 cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
@@ -193,18 +206,18 @@ namespace SchoolTemplate.Controllers
         }
 
         //data naar database sturen vanuit inlogformulier
-        private void SavePerson(PersonModel person)
+        private void SavePersonLogIn(InlogModel personlogin)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_inloggen(naam,achternaam,emailadres,geboortedatum,wachtwoord,wachtwoord herhalen) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum,?wachtwoord,?wachtwoord herhalen)", conn);
-                cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
-                cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
-                cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
-                cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = person.Geboortedatum;
-                cmd.Parameters.Add("?wachtwoord", MySqlDbType.VarChar).Value = person.Wachtwoord;
-                cmd.Parameters.Add("?wachtwoord herhalen", MySqlDbType.VarChar).Value = person.Wachtwoord herhalen;
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_inloggen(voornaam,achternaam,emailadres,geboortedatum,wachtwoord) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum,?wachtwoord)", conn);
+                cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = personlogin.Voornaam;
+                cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = personlogin.Achternaam;
+                cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = personlogin.Email;
+                cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = personlogin.Geboortedatum;
+                cmd.Parameters.Add("?wachtwoord", MySqlDbType.VarChar).Value = personlogin.Wachtwoord;
+             
                 cmd.ExecuteNonQuery();
             }
         }

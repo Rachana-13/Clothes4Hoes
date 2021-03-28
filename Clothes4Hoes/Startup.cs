@@ -34,10 +34,10 @@ namespace Clothes4Hoes
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/Error/{0}");
             }
             app.UseStaticFiles();
-
+           
             app.UseRouting();
 
             app.UseAuthorization();
