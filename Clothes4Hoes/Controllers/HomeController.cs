@@ -181,12 +181,12 @@ namespace SchoolTemplate.Controllers
 
             SavePersonLogIn(model);
 
-            return Redirect("/gelukt");
+            return Redirect("/inlogpagina");
         }
 
 
-        [Route("gelukt")]
-        public IActionResult Gelukt()
+        [Route("inlogpagina")]
+        public IActionResult Inlogpagina()
         {
             return View();
         }

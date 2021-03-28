@@ -67,6 +67,9 @@ h4 {
 h5 {
     background-color: #FFB9BD;
 }
+h6{
+    text-align: left;
+}
 .box {
     float: left;
     height: 80px;

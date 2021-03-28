@@ -14,22 +14,27 @@
 <body>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="inlog-pagina">
+    <div class="inlog-pagina"/>
 
         <h2 id="h2centerform">Inlogformulier</h2>
         <hr />
         <!-- formulier wordt verstuurd naar database en als de invoer niet goed is wordt het met eigen gemaakt error message weer gegeven-->
         <form text- method="post">
-            <input type="text" name="Voornaam" placeholder="Voornaam" /> <br />
-            @Html.ValidationMessageFor(m => m.Voornaam) <br />
-            <input type="text" name="Achternaam" placeholder="Achternaam" /> <br />
-            @Html.ValidationMessageFor(m => m.Achternaam) <br />
-            <input type="text" name="Email" placeholder="Emailadres" /> <br />
-            @Html.ValidationMessageFor(m => m.Email) <br />
-            <input type="date"  name="Geboortedatum" placeholder="Geboortedatum"  /> <br />
-            @Html.ValidationMessageFor(m => m.Geboortedatum) <br />
-            <input type="password" name="Wachtwoord" placeholder="Wachtwoord" /> <br />
-            @Html.ValidationMessageFor(m => m.Wachtwoord) <br />
+            <h6>Voornaam</h6>
+            <input type="text" name="Voornaam" placeholder="Voornaam" />
+            @Html.ValidationMessageFor(m => m.Voornaam)
+            <h6>Achternaam</h6>
+            <input type="text" name="Achternaam" placeholder="Achternaam" />
+            @Html.ValidationMessageFor(m => m.Achternaam)
+            <h6>Email</h6>
+            <input type="text" name="Email" placeholder="Emailadres" />
+            @Html.ValidationMessageFor(m => m.Email)
+            <h6>Geboortedatum</h6>
+            <input type="date" name="Geboortedatum" placeholder="Geboortedatum" />
+            @Html.ValidationMessageFor(m => m.Geboortedatum)
+            <h6>Wachtwoord</h6>
+            <input type="password" name="Wachtwoord" placeholder="Wachtwoord" />
+            @Html.ValidationMessageFor(m => m.Wachtwoord)
 
             <input type="submit" value="verstuur" />
         </form>

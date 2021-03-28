@@ -13,12 +13,37 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h1>Contact</h1>
+
 <div class="contact-pagina">
-    <p> Algemene vragen: 076-763 046 </p>
-    <p> Whatsapp (enkele berichten): 06-100 537 52 </p>
+
+
+    <div class="contact-pagina">
+        <p> Voor algemene vragen kunt u ons telefonisch bereiken op: 076-763 046  <br/>
+        Whatsapp (enkele berichten): 06-100 537 52 <p/>
+        <p> Als u wil dat wij contact met u opnemen kunt u het ondeerstaande formulier invullen <br/>
+        en dan nemen wij zo spoedig mogelijk contact met u op.</p>
+
+    </div>
+    <hr />
+    <h2 id="h2centerform">Contactformulier</h2>
+    <!-- formulier wordt verstuurd naar database en als de invoer niet goed is wordt het met eigen gemaakt error message weer gegeven-->
+    <form text- method="post">
+        <h6>Voornaam</h6>
+        <input type="text" name="Voornaam" placeholder="Voornaam" />
+        @Html.ValidationMessageFor(m => m.Voornaam)
+        <h6>Achternaam</h6>
+        <input type="text" name="Achternaam" placeholder="Achternaam" />
+        @Html.ValidationMessageFor(m => m.Achternaam)
+        <h6>Email</h6>
+        <input type="text" name="Email" placeholder="Emailadres" />
+        @Html.ValidationMessageFor(m => m.Email)
+        <h6>Geboortedatum</h6>
+        <input type="date" name="Geboortedatum" placeholder="Geboortedatum" />
+        @Html.ValidationMessageFor(m => m.Geboortedatum)
+        <input type="submit" value="verstuur" />
+    </form>
 
 </div>
-
 
 <div class=" column-box">
     <div class="box">
@@ -37,21 +62,3 @@
 
 </div>
 
-<div class="contact-pagina">
-
-    <h2 id="h2centerform">Contactformulier</h2>
-    <hr />
-    <!-- formulier wordt verstuurd naar database en als de invoer niet goed is wordt het met eigen gemaakt error message weer gegeven-->
-    <form text- method="post">
-        <input type="text" name="Voornaam" placeholder="Voornaam" /> <br />
-        @Html.ValidationMessageFor(m => m.Voornaam) <br />
-        <input type="text" name="Achternaam" placeholder="Achternaam" /> <br />
-        @Html.ValidationMessageFor(m => m.Achternaam) <br />
-        <input type="text" name="Email" placeholder="Emailadres" /> <br />
-        @Html.ValidationMessageFor(m => m.Email) <br />
-        <input type="date" name="Geboortedatum" placeholder="Geboortedatum" /> <br />
-        @Html.ValidationMessageFor(m => m.Geboortedatum) <br />
-        <input type="submit" value="verstuur" />
-    </form>
-
-</div>
