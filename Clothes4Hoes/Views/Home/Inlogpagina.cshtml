@@ -8,15 +8,18 @@
 <h3>
     Uw gegevens!
 </h3>
-
-@foreach (Inloggegevens i in inloggegevens)
+@if (inloggegevens != null)
 {
+    foreach (Inloggegevens i in inloggegevens)
+    {
 
-   
 
-    <p>@Model.Voornaam</p>
-    <p>@Model.Achternaam </p>
-    <p>@Model.Emailadres</p>
-    <p>@Model.Geboortedatum</p>
-    <p>@Model.Wachtwoord</p>
+
+        <p>@Model.Voornaam</p>
+        <p>@Model.Achternaam </p>
+        <p>@Model.Emailadres</p>
+        <p>@Model.Geboortedatum</p>
+        <p>@Model.Wachtwoord</p>
+    }
+
 }

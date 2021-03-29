@@ -9,14 +9,15 @@ using MySql.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using SchoolTemplate.Database;
+using Microsoft.AspNetCore.Http;
 
 namespace SchoolTemplate.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
-        private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
-        // private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+        // private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+        private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -150,6 +151,7 @@ namespace SchoolTemplate.Controllers
 
         public IActionResult Inloggen()
         {
+            
             return View();
         }
       
@@ -181,6 +183,8 @@ namespace SchoolTemplate.Controllers
 
             SavePersonLogIn(model);
 
+            
+
             return Redirect("/inlogpagina");
         }
 
@@ -188,7 +192,7 @@ namespace SchoolTemplate.Controllers
         [Route("inlogpagina")]
         public IActionResult Inlogpagina()
         {
-            return View();
+           return View();
         }
         //data naar database sturen vanuit contactformulier
         private void SavePerson(PersonModel person)
