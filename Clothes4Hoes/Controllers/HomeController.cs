@@ -25,7 +25,9 @@ namespace SchoolTemplate.Controllers
         }
         public IActionResult Index()
         {
-            var kledingstuks = GetKledingstuks();
+          ViewData["UserName"] = HttpContext.Session.GetString("UserName");
+
+          var kledingstuks = GetKledingstuks();
             return View(kledingstuks);
         }
         public List<Kledingstuk> GetKledingstuks()
@@ -66,6 +68,8 @@ namespace SchoolTemplate.Controllers
         [Route("kledingstuk/{Id}")]
         public IActionResult Kledingstuk(string id)
         {
+            ViewData["UserName"] = HttpContext.Session.GetString("UserName");
+
             var model = GetKledingstuk(id);
             var Kledingstukinfos = GetKledingstukInfo(id);
             ViewData["kledingstukinfos"] = Kledingstukinfos;
@@ -179,9 +183,7 @@ namespace SchoolTemplate.Controllers
 
         [Route("login")]
         public IActionResult Login()
-        {
-          ViewData["User"] = HttpContext.Session.GetString("UserName");
-
+        {         
           return View();
         }
 
@@ -189,18 +191,25 @@ namespace SchoolTemplate.Controllers
         [HttpPost]
         public IActionResult Login(string email, string wachtwoord)
         {
-            if(wachtwoord == "geheim")
-            {
-              HttpContext.Session.SetString("UserName", email);
-            }            
+          var klant = GetPersonByEmail(email);
+
+          if (klant.Wachtwoord == wachtwoord)
+          {
+              HttpContext.Session.SetInt32("UserId", klant.Id);
+              HttpContext.Session.SetString("UserName", klant.Voornaam);
+              return Redirect("/profiel");
+          }
       
-            return View();
+          return View();
         }
 
-        [Route("profiel/{id}")]
-        public IActionResult Profiel(string id)
+        [Route("profiel")]
+        public IActionResult Profiel()
         {
-          var model = GetPersonByEmailAndPassword(id);
+          int? id = HttpContext.Session.GetInt32("UserId");
+
+          var model = GetPersonById(id.Value);
+
           return View(model);
         }
 
@@ -218,7 +227,39 @@ namespace SchoolTemplate.Controllers
             }
         }
 
-        private KlantModel GetPersonByEmailAndPassword(string id)
+
+    private KlantModel GetPersonByEmail(string email)
+    {
+      List<KlantModel> persons = new List<KlantModel>();
+
+      using (MySqlConnection conn = new MySqlConnection(connectionString))
+      {
+        conn.Open();
+        MySqlCommand cmd = new MySqlCommand($"select * from klant_inloggen where emailadres = '{email}'", conn);
+
+        using (var reader = cmd.ExecuteReader())
+        {
+          while (reader.Read())
+          {
+            KlantModel p = new KlantModel
+            {
+              Id = Convert.ToInt32(reader["Id"]),
+              Voornaam = reader["voornaam"].ToString(),
+              Achternaam = reader["achternaam"].ToString(),
+              Email = reader["emailadres"].ToString(),
+              Wachtwoord = reader["wachtwoord"].ToString()
+
+            };
+            persons.Add(p);
+          }
+        }
+      }
+
+      return persons[0];
+    }
+
+
+        private KlantModel GetPersonById(int id)
         {
           List<KlantModel> persons = new List<KlantModel>();
 
@@ -236,8 +277,7 @@ namespace SchoolTemplate.Controllers
                   Id = Convert.ToInt32(reader["Id"]),
                   Voornaam = reader["voornaam"].ToString(),
                   Achternaam = reader["achternaam"].ToString(),
-                  Email = reader["emailadres"].ToString()              
-
+                  Email = reader["emailadres"].ToString()
                 };
                 persons.Add(p);
               }

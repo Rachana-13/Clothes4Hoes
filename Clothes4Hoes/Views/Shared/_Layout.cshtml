@@ -22,6 +22,9 @@
             <li><a href="/login">Inloggen</a></li>
             <li><a href="/kleding">Kleding</a></li>
             <li><a href="/contact">Contact</a></li>
+            @if (ViewData["UserName"] != null) { 
+              <li>Hoi, @ViewData["UserName"]</li>
+            }
         </ul>
         
     </nav>
