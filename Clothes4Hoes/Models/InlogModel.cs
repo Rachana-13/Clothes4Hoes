@@ -6,7 +6,9 @@ namespace Clothes4Hoes.Models
 // namespace SchoolTemplate.Models
 {
     public class InlogModel
-    {
+    {   
+        public int Klant_id { get; set; }
+
         //error messages als de invoer fout is 
         [Required(ErrorMessage = "Voornaam is verplicht!")]
         public string Voornaam { get; set; }

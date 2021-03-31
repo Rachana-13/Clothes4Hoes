@@ -2,7 +2,7 @@
 {
     public class klant_inloggen
     {
-
+        public int Klant_id { get; set; }
 
         public string Voornaam { get; set; }
 
@@ -17,7 +17,7 @@
 
     public class Inloggegevens
 {
-
+        public int Klant_id { get; set; }
 
         public string Voornaam { get; set; }
 

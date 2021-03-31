@@ -16,8 +16,8 @@ namespace SchoolTemplate.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> logger;
-        // private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
-        private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+        private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+        // private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -174,6 +174,7 @@ namespace SchoolTemplate.Controllers
 
             return Redirect("/gelukt");
         }
+
         [Route("Inloggen")]
         [HttpPost]
         public IActionResult Inloggen(InlogModel model)
@@ -183,17 +184,9 @@ namespace SchoolTemplate.Controllers
 
             SavePersonLogIn(model);
 
-            
-
             return Redirect("/inlogpagina");
         }
 
-
-        [Route("inlogpagina")]
-        public IActionResult Inlogpagina()
-        {
-           return View();
-        }
         //data naar database sturen vanuit contactformulier
         private void SavePerson(PersonModel person)
         {
@@ -215,7 +208,8 @@ namespace SchoolTemplate.Controllers
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_inloggen(voornaam,achternaam,emailadres,geboortedatum,wachtwoord) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum,?wachtwoord)", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_inloggen(klant_id,voornaam,achternaam,emailadres,geboortedatum,wachtwoord) VALUEs(?klant_id,?voornaam,?achternaam,?emailadres,?geboortedatum,?wachtwoord)", conn);
+                cmd.Parameters.Add("?klant_id", MySqlDbType.VarChar).Value = personlogin.Klant_id;
                 cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = personlogin.Voornaam;
                 cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = personlogin.Achternaam;
                 cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = personlogin.Email;
@@ -225,9 +219,13 @@ namespace SchoolTemplate.Controllers
                 cmd.ExecuteNonQuery();
             }
         }
+        public IActionResult LogInIndex() { ViewData["User"] = HttpContext.Session.GetString("User");
+            return View();
+        }
 
-
-
+        public IActionResult LogIn(string Voornaam, string Wachtwoord) {if (Wachtwoord == "Geheim"){ HttpContext.Session.SetString("User", Voornaam);
+                return Redirect("/"); }
+            return View(); }
     }
 
 }
