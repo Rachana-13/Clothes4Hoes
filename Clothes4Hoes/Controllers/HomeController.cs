@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using SchoolTemplate.Database;
 using Microsoft.AspNetCore.Http;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SchoolTemplate.Controllers
 {
@@ -193,7 +195,7 @@ namespace SchoolTemplate.Controllers
         {
           var klant = GetPersonByEmail(email);
 
-          if (klant.Wachtwoord == wachtwoord)
+          if (klant.Wachtwoord == ComputeSha256Hash(wachtwoord))
           {
               HttpContext.Session.SetInt32("UserId", klant.Id);
               HttpContext.Session.SetString("UserName", klant.Voornaam);
@@ -290,7 +292,8 @@ namespace SchoolTemplate.Controllers
         //data naar database sturen vanuit regsitratieformulier
         private void SavePersonLogIn(KlantModel personlogin)
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+              string wachtwoord = ComputeSha256Hash(personlogin.Wachtwoord);
+              using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_inloggen(voornaam,achternaam,emailadres,geboortedatum,wachtwoord) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum,?wachtwoord)", conn);
@@ -298,13 +301,31 @@ namespace SchoolTemplate.Controllers
                     cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = personlogin.Achternaam;
                     cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = personlogin.Email;
                     cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = personlogin.Geboortedatum;
-                    cmd.Parameters.Add("?wachtwoord", MySqlDbType.VarChar).Value = personlogin.Wachtwoord;
+                    cmd.Parameters.Add("?wachtwoord", MySqlDbType.VarChar).Value = wachtwoord;
              
                     cmd.ExecuteNonQuery();
                 }
             }
 
+    static string ComputeSha256Hash(string rawData)
+    {
+      // Create a SHA256   
+      using (SHA256 sha256Hash = SHA256.Create())
+      {
+        // ComputeHash - returns byte array  
+        byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+        // Convert byte array to a string   
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < bytes.Length; i++)
+        {
+          builder.Append(bytes[i].ToString("x2"));
+        }
+        return builder.ToString();
+      }
     }
+
+  }
 
 }
 
