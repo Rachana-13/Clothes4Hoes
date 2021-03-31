@@ -7,6 +7,8 @@ namespace Clothes4Hoes.Models
 {
     public class PersonModel
     {
+        public int Id { get; set; }
+
         //error messages als de invoer fout is 
         [Required(ErrorMessage = "Voornaam is verplicht!")]
         public string Voornaam { get; set; }

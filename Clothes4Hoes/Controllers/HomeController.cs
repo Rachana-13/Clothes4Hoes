@@ -56,10 +56,6 @@ namespace SchoolTemplate.Controllers
             }
             return kledingstuks;
         }       
-        public IActionResult Privacy ()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -201,37 +197,72 @@ namespace SchoolTemplate.Controllers
             return View();
         }
 
-        //data naar database sturen vanuit contactformulier
-        private void SavePerson(PersonModel person)
-          {
-              using (MySqlConnection conn = new MySqlConnection(connectionString))
-              {
-                  conn.Open();
-                  MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_contact(voornaam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
-                  cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
-                  cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
-                  cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
-                  cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = person.Geboortedatum;
-                  cmd.ExecuteNonQuery();
-              }
-          }
-
-        //data naar database sturen vanuit inlogformulier
-        private void SavePersonLogIn(KlantModel personlogin)
+        [Route("profiel/{id}")]
+        public IActionResult Profiel(string id)
         {
+          var model = GetPersonByEmailAndPassword(id);
+          return View(model);
+        }
+
+    //data naar database sturen vanuit contactformulier
+        private void SavePerson(PersonModel person){
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_inloggen(voornaam,achternaam,emailadres,geboortedatum,wachtwoord) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum,?wachtwoord)", conn);
-                cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = personlogin.Voornaam;
-                cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = personlogin.Achternaam;
-                cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = personlogin.Email;
-                cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = personlogin.Geboortedatum;
-                cmd.Parameters.Add("?wachtwoord", MySqlDbType.VarChar).Value = personlogin.Wachtwoord;
-             
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_contact(voornaam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
+                cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
+                cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
+                cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
+                cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = person.Geboortedatum;
                 cmd.ExecuteNonQuery();
             }
         }
+
+        private KlantModel GetPersonByEmailAndPassword(string id)
+        {
+          List<KlantModel> persons = new List<KlantModel>();
+
+          using (MySqlConnection conn = new MySqlConnection(connectionString))
+          {
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand($"select * from klant_inloggen where id = {id}", conn);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+              while (reader.Read())
+              {
+                KlantModel p = new KlantModel
+                {
+                  Id = Convert.ToInt32(reader["Id"]),
+                  Voornaam = reader["voornaam"].ToString(),
+                  Achternaam = reader["achternaam"].ToString(),
+                  Email = reader["emailadres"].ToString()              
+
+                };
+                persons.Add(p);
+              }
+            }
+          }
+
+          return persons[0];
+        }
+
+        //data naar database sturen vanuit regsitratieformulier
+        private void SavePersonLogIn(KlantModel personlogin)
+            {
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_inloggen(voornaam,achternaam,emailadres,geboortedatum,wachtwoord) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum,?wachtwoord)", conn);
+                    cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = personlogin.Voornaam;
+                    cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = personlogin.Achternaam;
+                    cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = personlogin.Email;
+                    cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = personlogin.Geboortedatum;
+                    cmd.Parameters.Add("?wachtwoord", MySqlDbType.VarChar).Value = personlogin.Wachtwoord;
+             
+                    cmd.ExecuteNonQuery();
+                }
+            }
 
     }
 

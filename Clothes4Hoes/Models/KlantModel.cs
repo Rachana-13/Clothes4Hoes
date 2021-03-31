@@ -7,7 +7,7 @@ namespace Clothes4Hoes.Models
 {
     public class KlantModel
     {   
-        public int Klant_id { get; set; }
+        public int Id { get; set; }
 
         //error messages als de invoer fout is 
         [Required(ErrorMessage = "Voornaam is verplicht!")]

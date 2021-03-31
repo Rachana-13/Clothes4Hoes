@@ -1,13 +1,12 @@
 ﻿@using SchoolTemplate.Database;
-@model klant_inloggen;
+@model KlantModel;
 @{
-    ViewData["Title"] = "Profielpagina";
-    List<Inloggegevens> inloggegevens = ViewData["Inloggegevens"] as List<Inloggegevens>;
+    ViewData["Title"] = "Profielpagina";    
 }
 
 <p>Voornaam: @Model.Voornaam</p>
 <p>Achternaam: @Model.Achternaam</p>
-<p>Emailadres: @Model.Emailadres</p>
+<p>Emailadres: @Model.Email</p>
 <p>Geboortedatum: @Model.Geboortedatum</p>
 <p>Wachtwoord: @Model.Wachtwoord</p>
 
