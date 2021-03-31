@@ -25,7 +25,7 @@ namespace Clothes4Hoes
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
                 options.Cookie.Name = "MyCookie";
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromDays(356);
                 options.Cookie.IsEssential = true;
             }
             );

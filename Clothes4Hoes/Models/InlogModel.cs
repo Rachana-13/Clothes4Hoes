@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace Clothes4Hoes.Models
 // namespace SchoolTemplate.Models
 {
-    public class InlogModel
+    public class KlantModel
     {   
         public int Klant_id { get; set; }
 

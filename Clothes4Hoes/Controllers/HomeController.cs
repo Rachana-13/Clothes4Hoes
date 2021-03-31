@@ -15,8 +15,8 @@ namespace SchoolTemplate.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
-         private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
+        private readonly ILogger<HomeController> _logger;
+        private readonly string connectionString = "Server=informatica.st-maartenscollege.nl;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
         // private readonly string connectionString = "Server=172.16.160.21;Port=3306;Database=109807;Uid=109807;Pwd=rfultyRa;";
 
         public HomeController(ILogger<HomeController> logger)
@@ -28,7 +28,6 @@ namespace SchoolTemplate.Controllers
             var kledingstuks = GetKledingstuks();
             return View(kledingstuks);
         }
-
         public List<Kledingstuk> GetKledingstuks()
         {
             List<Kledingstuk> kledingstuks = new List<Kledingstuk>();
@@ -56,9 +55,7 @@ namespace SchoolTemplate.Controllers
                 }
             }
             return kledingstuks;
-        }
-    
-       
+        }       
         public IActionResult Privacy ()
         {
             return View();
@@ -81,8 +78,7 @@ namespace SchoolTemplate.Controllers
         }
 
         [Route("Kleding")]
-
-         public IActionResult Kleding()
+        public IActionResult Kleding()
         {
             return View(GetKledingstuks());
         }
@@ -142,18 +138,7 @@ namespace SchoolTemplate.Controllers
             }
 
             return kledingstuks;
-        }
-
-        private readonly ILogger<HomeController> _logger;
-
-
-        [Route("Inloggen")]
-
-        public IActionResult Inloggen()
-        {
-            
-            return View();
-        }
+        }        
       
         //redirect naar contact
         [Route("Contact")]
@@ -174,43 +159,65 @@ namespace SchoolTemplate.Controllers
 
             return Redirect("/gelukt");
         }
-        [Route("Inloggen")]
+
+        [Route("registreren")]
+        public IActionResult Registreren()
+        {
+
+          return View();
+        }
+
+
+        [Route("registreren")]
         [HttpPost]
-        public IActionResult Inloggen(InlogModel model)
+        public IActionResult Registreren(KlantModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
             SavePersonLogIn(model);
 
-            
-
             return Redirect("/inlogpagina");
         }
 
 
-        [Route("inlogpagina")]
-        public IActionResult Inlogpagina()
+        [Route("login")]
+        public IActionResult Login()
         {
-           return View();
-        }
-        //data naar database sturen vanuit contactformulier
-        private void SavePerson(PersonModel person)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_contact(voornaam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
-                cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
-                cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
-                cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
-                cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = person.Geboortedatum;
-                cmd.ExecuteNonQuery();
-            }
+          ViewData["User"] = HttpContext.Session.GetString("UserName");
+
+          return View();
         }
 
+        [Route("login")]
+        [HttpPost]
+        public IActionResult Login(string email, string wachtwoord)
+        {
+            if(wachtwoord == "geheim")
+            {
+              HttpContext.Session.SetString("UserName", email);
+            }            
+      
+            return View();
+        }
+
+        //data naar database sturen vanuit contactformulier
+        private void SavePerson(PersonModel person)
+          {
+              using (MySqlConnection conn = new MySqlConnection(connectionString))
+              {
+                  conn.Open();
+                  MySqlCommand cmd = new MySqlCommand("INSERT INTO klant_contact(voornaam,achternaam,emailadres,geboortedatum) VALUEs(?voornaam,?achternaam,?emailadres,?geboortedatum)", conn);
+                  cmd.Parameters.Add("?voornaam", MySqlDbType.VarChar).Value = person.Voornaam;
+                  cmd.Parameters.Add("?achternaam", MySqlDbType.VarChar).Value = person.Achternaam;
+                  cmd.Parameters.Add("?emailadres", MySqlDbType.VarChar).Value = person.Email;
+                  cmd.Parameters.Add("?geboortedatum", MySqlDbType.Date).Value = person.Geboortedatum;
+                  cmd.ExecuteNonQuery();
+              }
+          }
+
         //data naar database sturen vanuit inlogformulier
-        private void SavePersonLogIn(InlogModel personlogin)
+        private void SavePersonLogIn(KlantModel personlogin)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -225,8 +232,6 @@ namespace SchoolTemplate.Controllers
                 cmd.ExecuteNonQuery();
             }
         }
-
-
 
     }
 
