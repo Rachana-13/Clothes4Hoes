@@ -37,6 +37,12 @@ nav li a {
     transition: background-color 1s;
     }
 
+nav li p {
+        float: right;
+        font-size: 20px;
+        font-family: 'Bookman Old Style
+    }
+
 li a:hover {
     background-color: #FFD5D8;
 }
@@ -257,4 +263,5 @@ hr {
     li a {
         display: block;
     }
+
 }

@@ -18,15 +18,15 @@
 
         <ul>
             <li><a href="/home">Home</a></li>
+            <li><a href="/kleding">Kleding</a></li>
             <li><a href="/registreren">Registreren</a></li>
             <li><a href="/login">Inloggen</a></li>
-            <li><a href="/kleding">Kleding</a></li>
             <li><a href="/contact">Contact</a></li>
-            @if (ViewData["UserName"] != null) { 
-              <li>Hoi, @ViewData["UserName"]</li>
+            @if (ViewData["UserName"] != null)
+            {
+                <li><a>Hoi, @ViewData["UserName"]!</a></li>
             }
         </ul>
-        
     </nav>
     
     @RenderBody()

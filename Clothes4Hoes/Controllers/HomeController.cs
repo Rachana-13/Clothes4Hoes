@@ -82,6 +82,7 @@ namespace SchoolTemplate.Controllers
         [Route("Kleding")]
         public IActionResult Kleding()
         {
+            ViewData["UserName"] = HttpContext.Session.GetString("UserName");
             return View(GetKledingstuks());
         }
 
@@ -146,6 +147,7 @@ namespace SchoolTemplate.Controllers
         [Route("Contact")]
         public IActionResult Contact()
         {
+            ViewData["UserName"] = HttpContext.Session.GetString("UserName");
             return View();
 
         }
@@ -159,7 +161,14 @@ namespace SchoolTemplate.Controllers
 
             SavePerson(model);
 
-            return Redirect("/gelukt");
+            return Redirect("/Gelukt");
+        }
+        [Route("Gelukt")]
+        public IActionResult Gelukt()
+        {
+            ViewData["UserName"] = HttpContext.Session.GetString("UserName");
+            return View();
+
         }
 
         [Route("registreren")]
@@ -179,7 +188,7 @@ namespace SchoolTemplate.Controllers
 
             SavePersonLogIn(model);
 
-            return Redirect("/inlogpagina");
+            return Redirect("/Gelukt");
         }
 
 
@@ -208,6 +217,7 @@ namespace SchoolTemplate.Controllers
         [Route("profiel")]
         public IActionResult Profiel()
         {
+          ViewData["UserName"] = HttpContext.Session.GetString("UserName");
           int? id = HttpContext.Session.GetInt32("UserId");
 
           var model = GetPersonById(id.Value);
@@ -279,7 +289,7 @@ namespace SchoolTemplate.Controllers
                   Id = Convert.ToInt32(reader["Id"]),
                   Voornaam = reader["voornaam"].ToString(),
                   Achternaam = reader["achternaam"].ToString(),
-                  Email = reader["emailadres"].ToString()
+                  Email = reader["emailadres"].ToString(),
                 };
                 persons.Add(p);
               }
